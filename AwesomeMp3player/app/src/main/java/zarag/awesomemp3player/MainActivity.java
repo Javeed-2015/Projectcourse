@@ -1,38 +1,75 @@
 package zarag.awesomemp3player;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.SeekBar;
 
 public class MainActivity extends Activity {
+
+    SeekBar sb;
+    ImageButton playBtn, pauseBtn, stopBtn;
+    //MediaController mc;
+    //int cnt = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+        // load the song and create a media player
+        String song = "http://mobi.randomsort.net/wp-content/uploads/2015/07/filetoplay.mp3";
+        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), Uri.parse(song));
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        // start the song after click
+        playBtn = (ImageButton)findViewById(R.id.playBtn);
+        playBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp.start();
+            }
+        });
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        // pause the song
+        pauseBtn = (ImageButton)findViewById(R.id.pauseBtn);
+        pauseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp.pause();
+            }
+        });
 
-        return super.onOptionsItemSelected(item);
+
+        // stop the song
+        stopBtn = (ImageButton)findViewById(R.id.stopBtn);
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp.pause();
+            }
+        });
+
+        // the awesome seek bar =)
+        sb = (SeekBar)findViewById(R.id.seekBar);
+        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+          //      mp.start();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 }
