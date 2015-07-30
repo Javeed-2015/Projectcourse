@@ -11,9 +11,9 @@ import android.widget.SeekBar;
 
 public class MainActivity extends Activity {
 
-    SeekBar sb;
+    SeekBar seekBar;
     ImageButton playBtn, pauseBtn, stopBtn;
-    MediaPlayer mp;
+    MediaPlayer mediaPlayer;
     Handler seekHandler = new Handler();
 
     @Override
@@ -23,17 +23,19 @@ public class MainActivity extends Activity {
 
         // load the song and create a media player
         String song = "http://mobi.randomsort.net/wp-content/uploads/2015/07/filetoplay.mp3";
-        mp = MediaPlayer.create(getApplicationContext(), Uri.parse(song));
-        sb = (SeekBar)findViewById(R.id.seekBar);
-        sb.setMax(mp.getDuration());
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(song));
+
+        // init seek bar
+        seekBar = (SeekBar)findViewById(R.id.seekBar);
+        seekBar.setMax(mediaPlayer.getDuration());
 
         // start the song after click
         playBtn = (ImageButton)findViewById(R.id.playBtn);
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!mp.isPlaying()) {
-                    mp.start();
+                if(!mediaPlayer.isPlaying()) {
+                    mediaPlayer.start();
                     drawSeekBar();
                 }
             }
@@ -44,8 +46,8 @@ public class MainActivity extends Activity {
         pauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mp.isPlaying()) {
-                    mp.pause();
+                if(mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
                 }
             }
         });
@@ -55,20 +57,21 @@ public class MainActivity extends Activity {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mp.isPlaying()) {
-                    mp.pause();
-                    mp.seekTo(0);
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                    mediaPlayer.seekTo(0);
                 }
             }
         });
 
         // the awesome seek bar =)
-        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
-               // sb.jumpDrawablesToCurrentState();
-
+                if (b) { // thanks for the tip johan =)
+                    seekBar.setProgress(i);
+                    mediaPlayer.seekTo(i);
+                }
             }
 
             @Override
@@ -83,12 +86,13 @@ public class MainActivity extends Activity {
         });
     }
 
-    public void drawSeekBar() {
+    // update the seek bar while the sound is playing
+    private void drawSeekBar() {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(mp != null ){
-                    sb.setProgress(mp.getCurrentPosition());
+                if(mediaPlayer != null ){
+                   seekBar.setProgress(mediaPlayer.getCurrentPosition());
                 }
                 seekHandler.postDelayed(this, 1000);
             }

@@ -23,7 +23,8 @@
         android:src="@mipmap/play"
         android:layout_alignTop="@+id/pauseBtn"
         android:layout_toStartOf="@+id/stopBtn"
-        android:layout_alignBottom="@+id/pauseBtn" />
+        android:layout_alignBottom="@+id/pauseBtn"
+        android:layout_gravity="top|center" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -32,13 +33,15 @@
         android:src="@mipmap/pause"
         android:layout_alignTop="@+id/stopBtn"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="61dp" />
+        android:layout_marginEnd="61dp"
+        android:layout_gravity="top|center" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/stopBtn"
         android:src="@mipmap/stop"
-        android:layout_toStartOf="@+id/pauseBtn" />
+        android:layout_toStartOf="@+id/pauseBtn"
+        android:layout_gravity="top|center" />
 
 </RelativeLayout>
