@@ -15,7 +15,6 @@ public class MainActivity extends Activity {
     //MediaController mc;
     //int cnt = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +29,9 @@ public class MainActivity extends Activity {
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if(!mp.isPlaying()) {
+                    mp.start();
+                }
             }
         });
 
@@ -39,17 +40,21 @@ public class MainActivity extends Activity {
         pauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.pause();
+                if(mp.isPlaying()) {
+                    mp.pause();
+                }
             }
         });
-
 
         // stop the song
         stopBtn = (ImageButton)findViewById(R.id.stopBtn);
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.pause();
+                if(mp.isPlaying()) {
+                    mp.pause();
+                    mp.seekTo(0);
+                }
             }
         });
 
@@ -58,12 +63,13 @@ public class MainActivity extends Activity {
         sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+               // sb.jumpDrawablesToCurrentState();
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-          //      mp.start();
+                //      mp.start();
             }
 
             @Override
