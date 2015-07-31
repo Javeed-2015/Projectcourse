@@ -52,15 +52,14 @@ public class MainActivity extends Activity {
             }
         });
 
+
         // stop the song
         stopBtn = (ImageButton)findViewById(R.id.stopBtn);
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();
-                    mediaPlayer.seekTo(0);
-                }
+                mediaPlayer.pause();
+                mediaPlayer.seekTo(0);
             }
         });
 
