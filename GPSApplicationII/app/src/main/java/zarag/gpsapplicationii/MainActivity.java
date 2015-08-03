@@ -2,7 +2,6 @@ package zarag.gpsapplicationii;
 
 import android.app.Activity;
 import android.content.Context;
-import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +22,11 @@ public class MainActivity extends Activity {
     private Button addBtn, removeBtn;
 
     private LocationListener locationListener;
-    LocationManager locationManager;
+    private LocationManager locationManager;
+
+    private float distance, lastDistance;
+    private String walked = "Distance already walked: ";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,8 @@ public class MainActivity extends Activity {
         addBtn = (Button)findViewById(R.id.addBtn);
         removeBtn = (Button)findViewById(R.id.removeBtn);
 
-        travelDistance.setText("0");
+        distance = 0;
+        travelDistance.setText(walked + String.valueOf(distance));
 
         locationListener = new LocationListener() {
             @Override
@@ -66,23 +69,21 @@ public class MainActivity extends Activity {
         addLocation();
         removeLastLocation();
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
     }
 
     private void addLocation() {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast debugToast = Toast.makeText(getApplicationContext(),
-                        "the altitude" + currLocation.getAltitude()
-                              + "the longtitude" + currLocation.getLongitude(), Toast.LENGTH_SHORT );
-                debugToast.show();
-                if (currLocation != null && locations.size() > 1 && !locations.contains(currLocation)) {
+                if (currLocation != null && !locations.contains(currLocation)) {
                     locations.add(currLocation);
-                    // set the new distance
-                    Float tmpDistance = refreshDistance(Float.parseFloat(travelDistance.getText().toString()),
-                            currLocation.distanceTo(locations.get(locations.size() - 2)));
-                    travelDistance.setText("Distance" + String.valueOf(tmpDistance));
+                    if(locations.size() > 1) {
+                        // set the new distance
+                        lastDistance = currLocation.distanceTo(locations.get(locations.size()-2));
+                        distance += lastDistance ;
+                        travelDistance.setText(walked + String.valueOf(distance));
+                    }
                 }
             }
         });
@@ -92,15 +93,19 @@ public class MainActivity extends Activity {
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!locations.isEmpty()) {
+                if(locations != null) {
                     // delete the last location
                     locations.remove(locations.size() - 1);
+                    if(locations.size() > 1) {
+                        distance -= lastDistance;
+                        lastDistance = distance;
+                    } else {
+                        lastDistance = 0;
+                        distance = 0;
+                    }
+                    travelDistance.setText(walked + String.valueOf(distance));
                 }
             }
         });
-    }
-
-    private float refreshDistance(float oldDistance, float newDistance) {
-        return oldDistance + newDistance;
     }
 }
