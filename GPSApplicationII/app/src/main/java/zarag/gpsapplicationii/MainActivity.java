@@ -23,15 +23,14 @@ public class MainActivity extends Activity {
     private TextView travelDistance;
     private Button addBtn, removeBtn;
 
-    // private LocationManager locationManager;
-    private LocationListener locationListener;
+    //private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        currLocation = null;
+        currLocation = new Location(LocationManager.GPS_PROVIDER);
         locations = new ArrayList<Location>();
 
         travelDistance = (TextView)findViewById(R.id.travelDistanceTxt);
@@ -40,10 +39,10 @@ public class MainActivity extends Activity {
 
         travelDistance.setText("0");
 
-        locationListener = new LocationListener() {
+        new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                currLocation = new Location(location);
+                currLocation = location;
             }
 
             @Override
@@ -73,12 +72,12 @@ public class MainActivity extends Activity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (currLocation != null && !locations.contains(currLocation)) {
+                if (currLocation != null && locations.size() > 1 && !locations.contains(currLocation)) {
                     locations.add(currLocation);
                     // set the new distance
                     Float tmpDistance = refreshDistance(Float.parseFloat(travelDistance.getText().toString()),
                             currLocation.distanceTo(locations.get(locations.size() - 2)));
-                    travelDistance.setText(String.valueOf(tmpDistance));
+                    travelDistance.setText("Distance" + String.valueOf(tmpDistance));
                 }
             }
         });
