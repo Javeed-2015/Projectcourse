@@ -23,14 +23,16 @@ public class MainActivity extends Activity {
     private TextView travelDistance;
     private Button addBtn, removeBtn;
 
-    //private LocationListener locationListener;
+    private LocationListener locationListener;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        currLocation = new Location(LocationManager.GPS_PROVIDER);
+
+        currLocation = new Location(locationManager.GPS_PROVIDER);
         locations = new ArrayList<Location>();
 
         travelDistance = (TextView)findViewById(R.id.travelDistanceTxt);
@@ -39,7 +41,7 @@ public class MainActivity extends Activity {
 
         travelDistance.setText("0");
 
-        new LocationListener() {
+        locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 currLocation = location;
@@ -61,11 +63,10 @@ public class MainActivity extends Activity {
             }
         };
 
-        //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //locationManager.addGpsStatusListener((GpsStatus.Listener) locationListener);
-
         addLocation();
         removeLastLocation();
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, locationListener);
     }
 
     private void addLocation() {
