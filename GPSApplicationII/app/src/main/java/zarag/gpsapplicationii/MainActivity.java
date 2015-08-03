@@ -93,15 +93,14 @@ public class MainActivity extends Activity {
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(locations != null) {
+                if(locations != null && !locations.isEmpty()) {
                     // delete the last location
                     locations.remove(locations.size() - 1);
-                    if(locations.size() > 1) {
+                    if(locations.size() != 1) {
                         distance -= lastDistance;
-                        lastDistance = distance;
                     } else {
-                        lastDistance = 0;
                         distance = 0;
+                        lastDistance = 0;
                     }
                     travelDistance.setText(walked + String.valueOf(distance));
                 }
