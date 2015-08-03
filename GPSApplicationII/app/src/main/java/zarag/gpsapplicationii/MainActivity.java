@@ -24,13 +24,13 @@ public class MainActivity extends Activity {
     private Button addBtn, removeBtn;
 
     private LocationListener locationListener;
-    private LocationManager locationManager;
-
+    LocationManager locationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         currLocation = new Location(locationManager.GPS_PROVIDER);
         locations = new ArrayList<Location>();
