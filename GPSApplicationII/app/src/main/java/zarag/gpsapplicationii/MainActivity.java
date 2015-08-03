@@ -73,6 +73,10 @@ public class MainActivity extends Activity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast debugToast = Toast.makeText(getApplicationContext(),
+                        "the altitude" + currLocation.getAltitude()
+                              + "the longtitude" + currLocation.getLongitude(), Toast.LENGTH_SHORT );
+                debugToast.show();
                 if (currLocation != null && locations.size() > 1 && !locations.contains(currLocation)) {
                     locations.add(currLocation);
                     // set the new distance
