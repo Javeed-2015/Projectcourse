@@ -72,6 +72,7 @@ public class MainActivity extends Activity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
     }
 
+    // review rename the method to something like callAddLocationListener
     private void addLocation() {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +90,7 @@ public class MainActivity extends Activity {
         });
     }
 
+    // review rename the method to something like callRemoveLocationListener
     private void removeLastLocation() {
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
