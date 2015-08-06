@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
 
         if(mySongs.size()> 0)
         {
-            for (int i = 3 ; i < 4; i++)
+            for (int i = 5 ; i < 6; i++)
             {
                 Toast.makeText(getApplicationContext(), mySongs.get(i).getPath(),Toast.LENGTH_SHORT).show();
                 song = mySongs.get(i).getPath();
