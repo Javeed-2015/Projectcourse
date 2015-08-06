@@ -1,4 +1,4 @@
-package com.example.my.mp3playlist;
+package com.example.my.mediaplayersonglist;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
