@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "zarag.awesomemp3player"
-        minSdkVersion 19
-        targetSdkVersion 19
+        minSdkVersion 15
+        targetSdkVersion 15
         versionCode 1
         versionName "1.0"
     }
