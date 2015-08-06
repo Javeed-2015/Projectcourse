@@ -3,7 +3,8 @@
     package="zarag.awesomemp3player" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,6 +24,10 @@
         <activity
             android:name=".CreatePlaylist"
             android:label="@string/title_activity_create_playlist" >
+        </activity>
+        <activity
+            android:name=".PlayList"
+            android:label="@string/title_activity_play_list" >
         </activity>
     </application>
 
