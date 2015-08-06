@@ -25,10 +25,6 @@
             android:name=".CreatePlaylist"
             android:label="@string/title_activity_create_playlist" >
         </activity>
-        <activity
-            android:name=".PlayList"
-            android:label="@string/title_activity_play_list" >
-        </activity>
     </application>
 
 </manifest>
